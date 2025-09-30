@@ -380,7 +380,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="module">
-    // Import Firebase functions from your firebase.js
     import { db, collection, onSnapshot, deleteDoc, doc } from "./firebase.js";
 
     const list = document.getElementById("studentList");
@@ -403,7 +402,6 @@
       return name.split(' ').map(n => n[0]).join('').toUpperCase();
     }
 
-    // Show students (Realtime)
     function getStudents() {
       onSnapshot(collection(db, "students"), (snapshot) => {
         // Reset collections
@@ -412,10 +410,8 @@
         teachers.clear();
         campuses.clear();
         
-        // hide loader once data is ready
         loader.classList.add("hidden");
         
-        // Check if we have any students
         if (snapshot.empty) {
           list.classList.add("hidden");
           emptyState.classList.remove("hidden");
@@ -433,14 +429,12 @@
           const studentId = docSnap.id;
           let created = student.createdAt?.toDate().toLocaleString() || "Not available";
           
-          // Store student for search functionality
           allStudents.push({
             id: studentId,
             data: student,
             element: null
           });
           
-          // Add to collections for stats
           if (student.course) courses.add(student.course);
           if (student.teacherName) teachers.add(student.teacherName);
           if (student.campus) campuses.add(student.campus);
@@ -562,7 +556,6 @@
         }
       });
       
-      // Show empty state if no results
       if (visibleCount === 0 && searchTerm !== '') {
         list.classList.add('hidden');
         emptyState.classList.remove('hidden');
@@ -578,4 +571,5 @@
     });
   </script>
 </body>
+
 </html>
